@@ -92,9 +92,15 @@ const Product = () => {
   };
 
   return (
-    <div className="flex gap-7 justify-start px-[6vw] flex-wrap mt-4">
+    <section className="mx-auto mt-7 max-w-6xl px-4">
+      <div className="mb-4">
+        <p className="text-sm font-bold uppercase text-[#F8481C]">Products</p>
+        <h2 className="text-2xl font-bold text-[#004E89]">Featured Products</h2>
+      </div>
+
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {products.map((p: any) => (
-        <div key={p._id} className="relative bg-white shadow p-3 w-60">
+        <div key={p._id} className="relative w-full rounded-lg bg-white p-3 shadow transition hover:-translate-y-1 hover:shadow-lg">
 
           {/* 🔴 OUT OF STOCK BADGE */}
           {p.stock <= 0 && (
@@ -106,7 +112,7 @@ const Product = () => {
           <img
             src={p.image}
             alt={p.name}
-            className="h-40 w-full object-cover mb-2"
+            className="mb-3 h-40 w-full rounded object-cover"
             onError={(e: any) => {
               e.target.src =
                 "https://dummyimage.com/300x200/cccccc/000000&text=No+Image";
@@ -130,8 +136,8 @@ const Product = () => {
           <button
             onClick={() => handleAddToCart(p)}
             disabled={p.stock <= 0}
-            className={`mt-2 w-full py-1 text-white ${p.stock > 0
-              ? "bg-black"
+            className={`mt-2 w-full rounded py-2 font-semibold text-white ${p.stock > 0
+              ? "btn cursor-pointer"
               : "bg-gray-400 cursor-not-allowed"
               }`}
           >
@@ -139,7 +145,7 @@ const Product = () => {
           </button>
 
           {/* ❤️ Wishlist */}
-          <span className="absolute top-44 right-3">
+          <span className="absolute right-3 top-44">
             <button onClick={() => handleAddToWish(p)}>
               <Heart
                 size={25}
@@ -150,7 +156,8 @@ const Product = () => {
           </span>
         </div>
       ))}
-    </div>
+      </div>
+    </section>
   );
 };
 

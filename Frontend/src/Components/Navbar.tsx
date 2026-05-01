@@ -17,22 +17,22 @@ const Navbar = () => {
 
   return (
     <div
-      className='nav text-white flex justify-between items-center py-5 px-7 shadow'>
-      <div className='flex gap-2'>
+      className='nav text-white flex flex-col gap-4 px-4 py-5 shadow md:flex-row md:items-center md:justify-between md:px-7'>
+      <div className='order-2 flex justify-center gap-2 md:order-1 md:justify-start'>
         <button
         onClick={() => { navigate("/account") }}
-        className='btn font-bold px-2 py-0.2 rounded bg-orange-400 cursor-pointer'>
+        className='btn rounded px-3 py-1 text-sm font-bold shadow-sm cursor-pointer sm:text-base'>
         Account
       </button>
       <button
           onClick={() => { navigate("/my-orders") }}
-          className='btn font-bold px-2 py-0.2 rounded bg-orange-400 cursor-pointer'>
+          className='btn rounded px-3 py-1 text-sm font-bold shadow-sm cursor-pointer sm:text-base'>
           Orders
         </button>
       </div>
-      <h1 className='cursor-default text-3xl font-bold'>E-Commerce Store</h1>
+      <h1 className='order-1 cursor-default text-center text-2xl font-bold sm:text-3xl md:order-2'>E-Commerce Store</h1>
       <div
-        className='flex gap-5'>
+        className='order-3 flex items-center justify-center gap-4 md:justify-end'>
         <button
           onClick={() => { navigate("/wishlist") }}
           className='cursor-pointer'>
@@ -41,7 +41,7 @@ const Navbar = () => {
         <CartIcon />
         <button
           onClick={handleLogout}
-          className='btn font-bold px-2 py-0.2 rounded bg-orange-400 cursor-pointer'
+          className='btn rounded px-3 py-1 text-sm font-bold shadow-sm cursor-pointer sm:text-base'
         >Logout</button>
 
       </div>
