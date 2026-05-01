@@ -18,12 +18,12 @@ A full-stack multi-vendor e-commerce web application.
 ## ⚙️ Setup Instructions
 
 ### Backend
-cd backend  
+cd Backend  
 npm install  
 npm start  
 
 ### Frontend
-cd frontend  
+cd Frontend  
 npm install  
 npm run dev  
 
