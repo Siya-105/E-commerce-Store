@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 // import { getCart, saveCart } from "../utils/cart";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { MapPin, ShoppingBag, Trash2 } from "lucide-react";
 
 const Cart = () => {
     const [cart, setCart] = useState<any[]>([]);
@@ -96,89 +97,118 @@ const Cart = () => {
     };
 
     return (
-        <div className="background h-screen">
-            <div className="nav text-white flex justify-between items-center py-5 px-7 shadow">
+        <div className="background min-h-screen">
+            <div className="nav flex items-center justify-between px-7 py-5 text-white shadow">
                 <button
-                    className="btn font-bold px-2 py-0.2 rounded cursor-pointer"
+                    className="btn cursor-pointer rounded px-3 py-1 font-bold transition hover:brightness-95"
                     onClick={() => { navigate("/account") }}
                 >Account</button>
-                <h1 className="cursor-default text-3xl font-bold">Cart</h1>
+                <h1 className="cursor-default text-3xl font-bold">My Cart</h1>
                 <button
                     onClick={() => { navigate("/dashboard") }}
-                    className='btn font-bold px-2 py-0.2 rounded cursor-pointer'>Dashboard</button>
+                    className="btn cursor-pointer rounded px-3 py-1 font-bold transition hover:brightness-95">Dashboard</button>
             </div>
 
 
             {cart.length === 0 ? (
-                <div>
-                    <p className="p-6 font-semibold">No Items In Cart</p>
-                    <div className="flex justify-center">
-                        <img src="https://cdni.iconscout.com/illustration/premium/thumb/confusing-woman-due-to-empty-cart-illustration-svg-download-png-3780056.png" alt="" />
+                <div className="mx-auto flex max-w-4xl flex-col items-center px-6 py-10 text-center">
+                    <div className="mb-5 rounded-full bg-white p-5 text-[#004E89] shadow">
+                        <ShoppingBag size={42} />
                     </div>
+                    <h2 className="text-2xl font-bold text-[#004E89]">Your cart is empty</h2>
+                    <p className="mt-2 max-w-md text-gray-600">Looks like you have not added anything yet.</p>
+                    <button
+                        onClick={() => { navigate("/dashboard") }}
+                        className="btn mt-5 cursor-pointer rounded px-5 py-2 font-semibold text-white shadow transition hover:brightness-95"
+                    >
+                        Browse Products
+                    </button>
+                    <img
+                        src="https://cdni.iconscout.com/illustration/premium/thumb/confusing-woman-due-to-empty-cart-illustration-svg-download-png-3780056.png"
+                        alt="Empty cart"
+                        className="mt-6 max-h-80 max-w-full object-contain"
+                    />
                 </div>
 
             ) : (
-                <div className="p-6">
-                    <div className="flex gap-4">
-                        {cart.map((item) => (
+                <div className="mx-auto grid max-w-6xl gap-6 p-6 lg:grid-cols-[1fr_360px]">
+                    <div>
+                        <div className="mb-4">
+                            <p className="text-sm font-bold uppercase text-[#F8481C]">Shopping Bag</p>
+                            <h2 className="text-2xl font-bold text-[#004E89]">{cart.length} item{cart.length > 1 ? "s" : ""} in your cart</h2>
+                        </div>
 
-                            <div key={item._id} className="bg-white shadow p-3 w-60">
-                                <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    className="h-40 w-full object-cover mb-2"
-                                    onError={(e: any) => {
-                                        e.target.src = "https://dummyimage.com/300x200/cccccc/000000&text=No+Image";
-                                    }}
-                                />
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                            {cart.map((item) => (
 
-                                <h3 className="font-semibold capitalize">{item.qty} {item.name}</h3>
-                                {item.qty > item.stock && (
-                                    <p className="text-red-500 text-sm">
-                                        Only {item.stock} items available
-                                    </p>
-                                )}
-                                <p className="text-sm text-gray-500 capitalize">{item.description}</p>
-                                <h4 className="font-bold">₹{item.price}</h4>
-                                <p className="text-sm text-gray-500">
-                                    Stock: {item.stock > 0 ? item.stock : "Out of Stock"}
-                                </p>
+                                <div key={item._id} className="overflow-hidden rounded-lg bg-white shadow transition hover:-translate-y-1 hover:shadow-lg">
+                                    <img
+                                        src={item.image}
+                                        alt={item.name}
+                                        className="h-40 w-full object-cover"
+                                        onError={(e: any) => {
+                                            e.target.src = "https://dummyimage.com/300x200/cccccc/000000&text=No+Image";
+                                        }}
+                                    />
 
-                                <button
-                                    onClick={() => removeItem(item.productId)}
-                                    className="mt-2 w-full bg-black text-white py-1 cursor-pointer"
-                                >
-                                    Remove
-                                </button>
-                            </div>
+                                    <div className="p-3">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div>
+                                                <h3 className="font-semibold capitalize text-gray-900">{item.name}</h3>
+                                                <p className="text-sm text-gray-500">Qty: {item.qty}</p>
+                                            </div>
+                                            <h4 className="font-bold text-[#004E89]">Rs. {item.price}</h4>
+                                        </div>
 
-                        ))}
+                                        {item.qty > item.stock && (
+                                            <p className="mt-2 rounded bg-red-50 px-2 py-1 text-sm font-semibold text-red-600">
+                                                Only {item.stock} items available
+                                            </p>
+                                        )}
+                                        <p className="mt-2 line-clamp-2 text-sm capitalize text-gray-500">{item.description}</p>
+                                        <p className="mt-2 text-sm text-gray-600">
+                                            Stock: {item.stock > 0 ? item.stock : "Out of Stock"}
+                                        </p>
 
+                                        <button
+                                            onClick={() => removeItem(item.productId)}
+                                            className="mt-3 flex w-full cursor-pointer items-center justify-center gap-2 rounded bg-gray-900 py-2 font-semibold text-white transition hover:bg-red-600"
+                                        >
+                                            <Trash2 size={16} />
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
 
+                            ))}
+                        </div>
                     </div>
 
-                    <div className="my-5 p-3 bg-white rounded shadow">
+                    <div className="h-fit rounded-lg bg-white p-5 shadow">
+                        <h3 className="mb-4 text-xl font-bold text-[#004E89]">Order Summary</h3>
                         <div>
                             {cart.map((item) => (
-                                <div className="flex justify-between w-1/3">
-                                    <p>{item.qty} {item.name}:</p>
-                                    <p className="text-gray-600">{item.qty} * ₹{item.price}</p>
-                                    <p className="font-semibold">₹{item.qty * item.price}</p>
+                                <div key={item.productId} className="mb-3 flex items-center justify-between gap-3 border-b border-gray-100 pb-3 text-sm">
+                                    <p className="font-medium capitalize text-gray-800">{item.qty} x {item.name}</p>
+                                    <p className="font-semibold text-gray-700">Rs. {item.qty * item.price}</p>
                                 </div>
 
                             ))}
                         </div>
 
                         <div className="mt-5">
-                            <h3 className="font-bold">Delivery Address:</h3>
+                            <h3 className="flex items-center gap-2 font-bold text-gray-900">
+                                <MapPin size={18} />
+                                Delivery Address
+                            </h3>
                             {user?.address ? (
-                                <p>{user.address}</p>
+                                <p className="mt-2 rounded bg-[#EFEFD0] p-3 text-sm text-gray-700">{user.address}</p>
                             ) : (
-                                <div>
+                                <div className="mt-2">
                                     <p className="font-semibold text-red-700">No address added</p>
                                     <button
                                         onClick={() => { navigate("/account") }}
-                                        className="text-white p-2 nav cursor-pointer">
+                                        className="nav mt-2 cursor-pointer rounded p-2 text-white">
                                         Add Address
                                     </button>
                                 </div>
@@ -186,13 +216,16 @@ const Cart = () => {
                         </div>
 
 
-                        <h2 className="text-lg font-bold mt-5">Total: ₹{total}</h2>
+                        <div className="mt-5 flex items-center justify-between border-t pt-4">
+                            <h2 className="text-lg font-bold">Total</h2>
+                            <p className="text-xl font-bold text-[#F8481C]">Rs. {total}</p>
+                        </div>
                         <button
                             onClick={handlePlaceOrder}
                             disabled={!user?.address || hasStockIssue}
-                            className={`px-4 py-2 mt-4 text-white ${!user?.address || hasStockIssue
+                            className={`mt-4 w-full rounded px-4 py-3 font-semibold text-white transition ${!user?.address || hasStockIssue
                                 ? "bg-gray-400 cursor-not-allowed"
-                                : "bg-green-500"
+                                : "cursor-pointer bg-green-500 hover:bg-green-600"
                                 }`}
                         >
                             {hasStockIssue ? "Fix stock issues" : "Place Order"}

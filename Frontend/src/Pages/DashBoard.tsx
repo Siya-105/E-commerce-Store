@@ -4,7 +4,7 @@ import Product from "../Components/Product"
 
 const DashBoard = () => {
   return (
-    <div className="pb-5">
+    <div className="background min-h-screen pb-8">
       <Navbar />
       <Carousel />
       <Product />

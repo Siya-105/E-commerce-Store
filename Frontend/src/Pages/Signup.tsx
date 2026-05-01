@@ -44,7 +44,7 @@ const Signup = () => {
             <div className="mb-8">
               <p className="text-sm font-semibold uppercase text-[#F8481C]">Join us</p>
               <h1 className="mt-2 text-3xl font-extrabold text-gray-900">Create your account</h1>
-              <p className="mt-2 text-gray-600">Start shopping as a customer or sell products as a vendor.</p>
+              {/* <p className="mt-2 text-gray-600">Start shopping as a customer or sell products as a vendor.</p> */}
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
